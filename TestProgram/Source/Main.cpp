@@ -30,49 +30,76 @@ struct new_window : ::boost::process::v1::detail::handler_base
 
 int main()
 {	
+    const char* pipeName = "\\\\.\\pipe\\MyMiddlemanPipe";
+    // Create to the pipe
+    HANDLE hPipe = CreateNamedPipeA(
+        pipeName,
+        PIPE_ACCESS_OUTBOUND,
+        PIPE_TYPE_BYTE,
+        4,
+        1000,
+        1000,
+        0,
+        NULL
+    );
 
-	std::cout << "Hello CMake asdasdfddddasd." << std::endl;
-	std::cout << "Testet" << greet()  << std::endl;
-	boost::process::v1::opstream InputStream;
-	boost::process::v1::ipstream out;
-	
-	// PseudoTerminalSession session(
-	// 	"C:\\CTF\\radare2-5.9.8-w64\\radare2-5.9.8-w64\\bin\\r2.bat -d C:\\CTF\\TestScripts\\CTFTestandeNy.exe",
-	// 	[](const std::string& output) {
-	// 		std::cout << output;
-	// 	}
-	// );
+    if (hPipe == INVALID_HANDLE_VALUE) {
+        std::cerr << "Failed to create to pipe\n";
+        return 1;
+    }
 
-	PseudoTerminalSession session(
-		"C:\\Users\\svart\\source\\repos\\CTFTestande\\out\\build\\x64-debug\\CTFTestande\\CTFTestandeSenaste.exe",
-		[](const std::string& output) {
-			std::cout << output;
-		}
-	);
+    // Start middleman with pipe name
+    std::string cmd = std::string("C:\\Users\\svart\\source\\repos\\CTFTestande\\out\\build\\x64-debug\\CTFTestande\\CTFTestandeSenaste.exe ") + pipeName;
 
-	std::this_thread::sleep_for(std::chrono::seconds(2));
-	session.write("pd 5\r\n");
+    STARTUPINFOA si = { sizeof(si) };
+    PROCESS_INFORMATION pi;
 
-	int hej = 0;
+    LPSTR hej = (LPSTR)cmd.c_str();
 
-	session.wait();
+    BOOL ok = CreateProcessA(
+        NULL, (LPSTR)cmd.c_str(),
+        NULL, NULL, TRUE,
+        CREATE_NEW_CONSOLE,
+        NULL, NULL,
+        &si, &pi
+    );
 
-	// boost::process::v1::child ChildProcess(boost::process::v1::search_path("r2"), "-d", "C:\\CTF\\TestScripts\\CTFTestandeNy.exe", boost::process::v1::std_out > out, boost::process::v1::std_in < InputStream);
-	// 	
-	// std::string OutputString;
-	// char buffer[100];
-	// while (ChildProcess.running())
-	// {	
-	// 	out.read(buffer, 5);
-	// 	int ReadAmount = out.gcount();
-	// 	if (ReadAmount < 100 -1)
-	// 	{
-	// 		buffer[ReadAmount] = '\0';
-	// 		InputStream.write("aaa\n", sizeof("aaa\n"));
-	// 		InputStream.flush();
-	// 	}
-	// 	std::cout << buffer;
-	// }
+    if (!ok) {
+        DWORD err = GetLastError();
+        std::cerr << "CreateProcessW failed. Error code: " << err << std::endl;
+        std::cerr << "Failed to launch middleman\n";
+        return 1;
+    }
 
-	return 0;
+    // Wait a bit for middleman to connect (or use ConnectNamedPipe on middleman side)
+    ConnectNamedPipe(hPipe,NULL);
+
+    // Send a command   
+    const char* msg = "echo Hello from parent\r\n";
+    DWORD written;
+    WriteFile(hPipe, msg, strlen(msg), &written, NULL);
+
+    WriteFile(hPipe, "aaa\n", strlen("aaa\n"), &written, NULL);
+    WriteFile(hPipe, "seek @main\n", strlen("seek @main\n"), &written, NULL);
+    WriteFile(hPipe, "v\n", strlen("v\n"), &written, NULL);
+
+
+    bool quit = false;
+
+    while (!quit)
+    {
+        std::string Command;
+        std::getline(std::cin, Command);
+        Command += "\r\n";
+        DWORD written;
+        WriteFile(hPipe, Command.data(), Command.size(), &written, NULL);
+        
+        if (Command == "q")
+        {
+            quit = true;
+        }
+    }
+
+    CloseHandle(hPipe);
+    return 0;
 }
