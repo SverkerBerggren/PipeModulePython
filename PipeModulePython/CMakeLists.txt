@@ -5,9 +5,7 @@
 # Add source to this project's executable.
 add_library (hello_ext SHARED 
 "Headers/PipeModulePython.h" 
-"Headers/PseudoTerminalSession.h"
-"Source/PipeModulePython.cpp"
-"Source/PseudoTerminalSession.cpp" )
+"Source/PipeModulePython.cpp" )
 
 
 # # Choose correct Boost.Python lib based on build type

@@ -4,8 +4,6 @@
 
 # Add source to this project's executable.
 add_executable (TestProgram
-"..//PipeModulePython/Headers/PseudoTerminalSession.h" 
-"..//PipeModulePython/Source/PseudoTerminalSession.cpp"
 "..//PipeModulePython/Headers/PipeModulePython.h" 
 "..//PipeModulePython/Source/PipeModulePython.cpp"
 "Source/Main.cpp"

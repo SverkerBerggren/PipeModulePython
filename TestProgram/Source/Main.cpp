@@ -16,7 +16,6 @@
 #include <boost/python.hpp>
 #include <boost/process/v1/handles.hpp>
 #include <boost/detail/winapi/process.hpp>
-#include "..//..//PipeModulePython/Headers/PseudoTerminalSession.h"
 
 struct new_window : ::boost::process::v1::detail::handler_base
 {
@@ -49,7 +48,7 @@ int main()
     }
 
     // Start middleman with pipe name
-    std::string cmd = std::string("C:\\Users\\svart\\source\\repos\\CTFTestande\\out\\build\\x64-debug\\CTFTestande\\CTFTestandeSenaste.exe ") + pipeName;
+    std::string cmd = std::string("C:\\VisualStudioProjekt\\PipeModulePython\\out\\build\\x64-debug\\MiddleManTerminal\\MiddleManTerminal.exe ") +"\"C:\\CTF\\radare2-5.9.8-w64\\radare2-5.9.8-w64\\bin\\r2.bat -d C:\\CTF\\CrackMes\\IOLI-crackme\\bin-win32\\crackme0x00.exe\" " + pipeName;
 
     STARTUPINFOA si = { sizeof(si) };
     PROCESS_INFORMATION pi;

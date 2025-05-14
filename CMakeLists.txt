@@ -11,8 +11,6 @@ endif()
 
 project ("PipeModulePython")
 
-message(hej=$ENV{BOOST_LIBRARYDIR})
-
 find_package(Boost 1.88.0 )
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 link_directories( $ENV{BOOST_LIBRARYDIR} )
@@ -21,3 +19,4 @@ INCLUDE_DIRECTORIES("C:\\Users\\svart\\AppData\\Local\\Programs\\Python\\Python3
 # Include sub-projects.
 add_subdirectory ("PipeModulePython")
 add_subdirectory ("TestProgram")
+add_subdirectory ("MiddleManTerminal")
