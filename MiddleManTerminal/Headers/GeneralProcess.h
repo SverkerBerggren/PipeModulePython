@@ -7,8 +7,12 @@
 class GeneralProcess
 {
 private:
+#ifdef _WIN32
+
 	STARTUPINFOA StartupInfo = { sizeof(STARTUPINFOA) };
 	PROCESS_INFORMATION ProcessInformation;
+#endif
+
 public:
 	GeneralProcess(const GeneralProcess& other) = delete;
 	GeneralProcess(GeneralProcess&& other) = delete;

@@ -31,14 +31,15 @@ void InjectInputWindows(const std::string& text)
 #endif
 
 #ifdef __linux__	
-    InjectInputLinux(const std::string& text)
+void InjectInputLinux(const std::string& text)
+{
+
+}
 #endif
 
 
 void InjectInput(const std::string& text) 
 {
-        std::cout << "argument kommer hit" << "\n";
-
 #ifdef _WIN32
     InjectInputWindows(text);
  // WIN_32
@@ -50,7 +51,7 @@ void InjectInput(const std::string& text)
 
 int main(int argc, char* argv[]) {
     if (argc < 3) {
-        std::cout << "Invalid amount of arguments. A program name and pipe name is needed\n";
+        std::cout << "Invalid amount of arguments. A program name and pipe name is needed \n";
         for (int i = 0; i < argc; i++)
         {
             std::cout << argv[i] << "\n";
@@ -69,14 +70,11 @@ int main(int argc, char* argv[]) {
     const char* ProgramArguments = argv[1];
     const char* PipeName = argv[2];
     GeneralPipe Pipe(PipeName);
-    HANDLE PipeHandle = CreateFileA(PipeName, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
     if (!Pipe.IsSuccessfullyConstructed())
     {
-        DWORD err = 0;
-        err = GetLastError();
-        std::cout << "knas med pipen " << PipeName <<" " << err << "\n";
-        // return 1;
+        std::cout << "knas med pipen " << PipeName <<" "  << "\n";
+       // return 1;
     }
     
     GeneralProcess Process(ProgramArguments);

@@ -11,12 +11,31 @@ endif()
 
 project ("PipeModulePython")
 
+message(hej=  "abow " + })
+message("Vad ar boost includesen" + ${Boost_INCLUDE_DIR})
+message("Cmake relativ grejen : "  ${CMAKE_CURRENT_SOURCE_DIR})
+message("INCLUDE : " $ENV{INCLUDE})
+
+if(WIN32)
+message("hej windows")
 find_package(Boost 1.88.0 )
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
+INCLUDE_DIRECTORIES( "Dependencies/Windows/Python/include" )
 link_directories( $ENV{BOOST_LIBRARYDIR} )
-INCLUDE_DIRECTORIES("C:\\Users\\svart\\AppData\\Local\\Programs\\Python\\Python313\\include")
+link_directories( "Dependencies/Windows/Python/libs" )
+endif(WIN32)
+
+if (UNIX)
+message("hej linux")
+INCLUDE_DIRECTORIES( "Dependencies/linux" )
+INCLUDE_DIRECTORIES( "Dependencies/linux/python3.11" )
+INCLUDE_DIRECTORIES( "Dependencies/linux/x86_64-linux-gnu" )
+endif (UNIX)
+
+#INCLUDE_DIRECTORIES( "Dependencies/Windows/ucrt" )
+#link_directories( "Dependencies/Python/libs" )
 
 # Include sub-projects.
 add_subdirectory ("PipeModulePython")
-add_subdirectory ("TestProgram")
 add_subdirectory ("MiddleManTerminal")
+add_subdirectory ("TestProgram")

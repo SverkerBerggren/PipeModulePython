@@ -6,7 +6,7 @@
 
 char const* greet()
 {
-	return "abow sag vad";
+	return "abow sag vadds bror";
 }
 
 BOOST_PYTHON_MODULE(hello_ext)

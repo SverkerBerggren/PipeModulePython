@@ -2,34 +2,46 @@
 //
 
 #include <iostream>
-#include "..//Headers/TestHeader.h"
-#include "..//..//PipeModulePython/Headers/PipeModulePython.h"
+#include <string>
+#ifdef _WIN32
 #define BOOST_ASIO_NO_WIN32_LEAN_AND_MEAN 
 #define WIN32_LEAN_AND_MEAN  
 #define _WIN32_WINNT 0x0A00
 #include <Windows.h>
-#include <boost/process.hpp>
-#include <boost/process/v1/child.hpp>
-#include <boost/process/v1/pipe.hpp>
-#include <boost/process/v1/search_path.hpp>
-#include <boost/process/v1/io.hpp>
-#include <boost/python.hpp>
-#include <boost/process/v1/handles.hpp>
-#include <boost/detail/winapi/process.hpp>
+#endif
 
-struct new_window : ::boost::process::v1::detail::handler_base
-{
-	// this function will be invoked at child process constructor before spawning process
-	template <class WindowsExecutor>
-	void on_setup(WindowsExecutor& e) const
-	{
-		e.creation_flags = ::boost::detail::winapi::CREATE_NEW_CONSOLE_;
-	}
-};
+#ifdef __linux__
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <spawn.h>
+#endif // __linux__
 
 int main()
 {	
+    #ifdef __linux__
     const char* pipeName = "\\\\.\\pipe\\MyMiddlemanPipe";
+
+
+    std::cout << "hej fran linux \n";
+    char inbuf[100];
+    int Pipe[2];
+
+    for (int i = 0; i < 2; i++)
+    {
+        Pipe[i] = i;
+    }
+
+    if (pipe(Pipe) < 0)
+    {
+        exit(1);
+    }
+
+    int status = posix_spawn()
+
+    #endif
+
+    #ifdef _WIN32
     // Create to the pipe
     HANDLE hPipe = CreateNamedPipeA(
         pipeName,
@@ -100,5 +112,7 @@ int main()
     }
 
     CloseHandle(hPipe);
+
+#endif
     return 0;
 }

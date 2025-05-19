@@ -22,12 +22,13 @@ GeneralPipe::~GeneralPipe()
 
 bool GeneralPipe::Read(char* Buffer,const int BufferSize , unsigned long& ReadBytes)
 {
+	bool RetValue = false;
 #ifdef _WIN32
 	BOOL Ok = ReadFile(PipeHandle, Buffer, BufferSize, &ReadBytes, NULL);
-	DWORD error =  GetLastError();
-	return Ok;
+	RetValue = Ok;
 #endif // _WIN32
 
+	return RetValue;
 }
 
 bool GeneralPipe::IsSuccessfullyConstructed()
