@@ -27,6 +27,8 @@
 #ifdef _WIN32
 int WindowsMain()
 {
+    const char* pipeName = "\\\\.\\pipe\\MyMiddlemanPipe";
+
     // Create to the pipe
     HANDLE hPipe = CreateNamedPipeA(
         pipeName,

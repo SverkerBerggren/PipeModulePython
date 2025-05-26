@@ -1,7 +1,10 @@
 #include "..//Headers/GeneralProcess.h"
-#include <unistd.h>
+
 #include <iostream>
+#ifdef __linux__
 #include <wait.h>
+#include <unistd.h>
+#endif // __linux__
 GeneralProcess::~GeneralProcess()
 {
 	//Needed?

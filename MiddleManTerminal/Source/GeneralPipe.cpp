@@ -11,7 +11,7 @@ bool GeneralPipe::CreatePipeWindows(const char* PipeName)
 	PipeHandle = CreateFileA(PipeName, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (!(PipeHandle == INVALID_HANDLE_VALUE))
 	{
-		return = true;
+		return  true;
 	}
 	return false;
 }
