@@ -11,7 +11,11 @@ private:
 
 	STARTUPINFOA StartupInfo = { sizeof(STARTUPINFOA) };
 	PROCESS_INFORMATION ProcessInformation;
-#endif
+#endif 
+#ifdef __linux__
+	pid_t ChildPid;
+#endif // __linux__
+
 
 public:
 	GeneralProcess(const GeneralProcess& other) = delete;

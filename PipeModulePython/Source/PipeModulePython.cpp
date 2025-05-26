@@ -9,7 +9,7 @@ char const* greet()
 	return "abow sag vadds bror";
 }
 
-BOOST_PYTHON_MODULE(hello_ext)
+BOOST_PYTHON_MODULE(InteractiveTerminalPipe)
 {
 	using namespace boost::python;
 	def("greet", greet);

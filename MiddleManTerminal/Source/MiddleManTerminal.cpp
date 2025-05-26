@@ -8,6 +8,11 @@
 #include <iostream>
 #include "..//Headers/GeneralPipe.h"
 #include "..//Headers/GeneralProcess.h"
+#ifdef __linux__
+#include <wait.h>
+#include <string.h>
+#endif // __linux__
+
 #ifdef _WIN32
 HANDLE TerminalHandle = GetStdHandle(STD_INPUT_HANDLE);
 void InjectInputWindows(const std::string& text)
@@ -33,7 +38,13 @@ void InjectInputWindows(const std::string& text)
 #ifdef __linux__	
 void InjectInputLinux(const std::string& text)
 {
-
+    for (char Character : text) 
+    {
+        if (ioctl(STDOUT_FILENO, TIOCSTI, &Character) < 0)
+        {
+            printf("Pipe failed %s \n", strerror(errno));
+        }
+    }
 }
 #endif
 
@@ -45,7 +56,7 @@ void InjectInput(const std::string& text)
  // WIN_32
 #endif
 #ifdef __linux__	
-
+    InjectInputLinux(text);
 #endif
 }
 
