@@ -49,7 +49,7 @@ void InjectInputLinux(const std::string& text)
 #endif
 
 
-void InjectInput(const std::string& text) 
+void MiddleManTerminal::InjectInput(const std::string& text) 
 {
 #ifdef _WIN32
     InjectInputWindows(text);
@@ -60,36 +60,19 @@ void InjectInput(const std::string& text)
 #endif
 }
 
-int main(int argc, char* argv[]) {
-    if (argc < 3) {
-        std::cout << "Invalid amount of arguments. A program name and pipe name is needed \n";
-        for (int i = 0; i < argc; i++)
-        {
-            std::cout << argv[i] << "\n";
-        }
-        // return 1;
-    }
-    if (argc > 3) {
-        std::cout << "To many arguments" << argc << "\n"; 
-        for (int i = 0; i < argc;i++)
-        {
-            std::cout << argv[i] <<"\n";
-        }
-       // return 1;
-    }
+int MiddleManTerminal::StartMiddleMan(const std::string& ProgramArguments, const std::string& PipeName)
+{
 
-    const char* ProgramArguments = argv[1];
-    const char* PipeName = argv[2];
     GeneralPipe Pipe(PipeName);
 
     if (!Pipe.IsSuccessfullyConstructed())
     {
-        std::cout << "knas med pipen " << PipeName <<" "  << "\n";
-       // return 1;
+        std::cout << "knas med pipen " << PipeName << " " << "\n";
+        // return 1;
     }
-    
+
     GeneralProcess Process(ProgramArguments);
-    
+
     std::thread pipeReader([&]() {
         char Buffer[128];
         unsigned long ReadBytes = 0;

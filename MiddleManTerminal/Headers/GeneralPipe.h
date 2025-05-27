@@ -11,21 +11,22 @@
 #include <sys/wait.h>
 #include <sys/ioctl.h>
 #endif 
+#include <string>
 class GeneralPipe
 {
 private:
 #ifdef _WIN32
 	HANDLE PipeHandle;
-	bool CreatePipeWindows(const char* PipeName);
+	bool CreatePipeWindows(const std::string& PipeName);
 #endif // _WINE#""
 #ifdef __linux__
 	int FileDescriptor = -1; 
-	bool CreatePipeLinux(const char* PipeName);
+	bool CreatePipeLinux(const std::string& PipeName);
 #endif // __linux__
 
 	bool SuccessfullyConstructed = false;
 public:
-	GeneralPipe(const char* PipeName);
+	GeneralPipe(const std::string& PipeName);
 	GeneralPipe(const GeneralPipe& other) = delete;
 	GeneralPipe(GeneralPipe&& other) = delete;
 	GeneralPipe& operator=(const GeneralPipe& other) = delete;

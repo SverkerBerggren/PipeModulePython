@@ -6,9 +6,9 @@
 #include <string.h>
 
 #ifdef _WIN32
-bool GeneralPipe::CreatePipeWindows(const char* PipeName)
+bool GeneralPipe::CreatePipeWindows(const std::string& PipeName)
 {
-	PipeHandle = CreateFileA(PipeName, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	PipeHandle = CreateFileA(PipeName.data(), GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (!(PipeHandle == INVALID_HANDLE_VALUE))
 	{
 		return  true;
@@ -17,7 +17,7 @@ bool GeneralPipe::CreatePipeWindows(const char* PipeName)
 }
 #endif	
 #ifdef __linux__
-bool GeneralPipe::CreatePipeLinux(const char* PipeName)
+bool GeneralPipe::CreatePipeLinux(const std::string& PipeName)
 {
 
 	mode_t Mode;
@@ -36,7 +36,7 @@ bool GeneralPipe::CreatePipeLinux(const char* PipeName)
 }
 #endif	
 
-GeneralPipe::GeneralPipe(const char* PipeName)
+GeneralPipe::GeneralPipe(const std::string& PipeName)
 {
 	#ifdef _WIN32
 	SuccessfullyConstructed = CreatePipeWindows(PipeName);

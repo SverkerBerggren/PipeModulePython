@@ -158,30 +158,6 @@ int LinuxMain()
             std::cout << "Terminal process terminated abnormally\n";
         }
     }
-
-    // pid_t MiddlemanPid = 0;
-    // std::string Path(WorkingDirectory);
-    // Path += "/laskeblask";
-    // 
-    // const char*  Environment[1] = { "abow" };
-    // 
-    // 
-    // char FirstArgument[] = "argument 1";
-    // char SecondArgument[] = "argument 2";
-    // char*  Arguments[2] = {FirstArgument,SecondArgument };
-    // 
-    // char FirstEnvoirementVariable[] = "argument 1";
-    // // char* EnvoirementVariables[1] = { FirstEnvoirementVariable };
-    // char* EnvoirementVariables[2] ;
-    // 
-    // posix_spawnattr_t SpawnAttributes;
-    // posix_spawn_file_actions_t SpawnActions;
-    // int Result = posix_spawnattr_init(&SpawnAttributes);
-    // SpawnAttributes.__flags = SpawnAttributes.__flags | POSIX_SPAWN_SETSID;
-    // 
-    // int status = posix_spawn( &MiddlemanPid, Path.data(), &SpawnActions, &SpawnAttributes, Arguments, EnvoirementVariables);
-
-   // printf("%d statusen\n", status);
     return 0;
 }
 

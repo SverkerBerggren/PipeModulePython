@@ -2,6 +2,7 @@
 //
 
 #include "..//Headers/PipeModulePython.h"
+#include "..//..//MiddleManTerminal/Headers/MiddleManTerminal.h"
 #include <boost/python.hpp>
 
 char const* greet()
@@ -13,4 +14,6 @@ BOOST_PYTHON_MODULE(InteractiveTerminalPipe)
 {
 	using namespace boost::python;
 	def("greet", greet);
+
+	class_<MiddleManTerminal>("InteractiveTerminal").def("InjectInput", &MiddleManTerminal::InjectInput);
 }

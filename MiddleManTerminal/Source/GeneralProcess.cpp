@@ -10,10 +10,10 @@ GeneralProcess::~GeneralProcess()
 	//Needed?
 }
 
-GeneralProcess::GeneralProcess(const char* ProgramArguments)
+GeneralProcess::GeneralProcess(const std::string& ProgramArguments)
 {
 #ifdef _WIN32
-	CreateProcessA(NULL, (LPSTR)ProgramArguments, NULL, NULL, TRUE, 0, NULL, NULL, &StartupInfo, &ProcessInformation);
+	CreateProcessA(NULL, (LPSTR)ProgramArguments.data(), NULL, NULL, TRUE, 0, NULL, NULL, &StartupInfo, &ProcessInformation);
 #endif // _WIN#""
 
 

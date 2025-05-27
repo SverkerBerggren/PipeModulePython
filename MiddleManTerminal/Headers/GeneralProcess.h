@@ -23,6 +23,6 @@ public:
 	GeneralProcess& operator=(const GeneralProcess& other) = delete;
 	GeneralProcess& operator=(GeneralProcess&& other) = delete;
 	~GeneralProcess();
-	GeneralProcess(const char* ProgramArguments);
+	GeneralProcess(const std::string& ProgramArguments);
 	void Wait();
 };
