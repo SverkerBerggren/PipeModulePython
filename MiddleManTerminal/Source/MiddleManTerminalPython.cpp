@@ -3,7 +3,7 @@
 
 char const* greet()
 {
-	return "ny sjuka target galna grejer";
+	return "ny asdyyyyy target galna grejer";
 }
 
 BOOST_PYTHON_MODULE(InteractiveTerminalPipe)

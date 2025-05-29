@@ -1,0 +1,1 @@
+['C:/VisualStudioProjekt/PipeModulePython/Config/BuildCopy.py', 'Windows', 'C:/VisualStudioProjekt/PipeModulePython/out/build/x64-debug/MiddleManTerminal']

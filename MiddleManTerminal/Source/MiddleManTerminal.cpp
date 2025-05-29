@@ -68,7 +68,7 @@ int MiddleManTerminal::StartMiddleMan(const std::string& ProgramArguments, const
     if (!Pipe.IsSuccessfullyConstructed())
     {
         std::cout << "knas med pipen " << PipeName << " " << "\n";
-        // return 1;
+        return 1;
     }
 
     GeneralProcess Process(ProgramArguments);

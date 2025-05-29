@@ -23,14 +23,16 @@ target_compile_definitions(InteractiveTerminalPipe PRIVATE
     BOOST_PYTHON_STATIC_LIB
 )
 
-set_target_properties(InteractiveTerminalPipe PROPERTIES
-    PREFIX ""
-    SUFFIX ".pyd"
-)
-target_compile_definitions(InteractiveTerminalPipe PRIVATE
-    BOOST_PYTHON_STATIC_LIB
-)
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET InteractiveTerminalPipe PROPERTY CXX_STANDARD 20)
 endif()
 # TODO: Add tests and install targets if needed.
+
+add_custom_target(
+    PythonBuildCopy ALL
+    DEPENDS InteractiveTerminalPipe MiddleManTerminal
+    WORKING_DIRECTORY ${PythonWorkingDirectory}
+    COMMAND py ${PythonCopyOutput} ${CurrentOperativeSystem} ${CMAKE_CURRENT_BINARY_DIR}
+    COMMAND_EXPAND_LISTS
+    VERBATIM
+) 
